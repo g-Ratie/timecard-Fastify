@@ -1,5 +1,6 @@
 import { FastifyPluginAsync } from 'fastify'
 import { prismaClient } from '../utils/prismaClient'
+import { getUserIdFromUserName } from '../utils/getGithubId'
 
 const id: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   fastify.get<{ Params: { id: string } }>('/github/:id', {
@@ -12,11 +13,15 @@ const id: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
       },
     },
   }, async (request, reply) => {
-    const userGithubId = request.params.id
-    console.log(userGithubId)
+    //数字の方のIDを取得
+    const userGithubId = await getUserIdFromUserName(request.params.id)
+    if (typeof userGithubId !== 'number') {
+      reply.code(404).send({ message: 'User not found' })
+      return
+    }
     const user = await prismaClient.users.findFirst({
       where: {
-        user_github_id: userGithubId
+        user_github_id: String(userGithubId),
       },
     });
     if (user === null) {
