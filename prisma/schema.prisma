@@ -28,5 +28,6 @@ model users {
   user_id         Int             @id @default(autoincrement())
   user_name       String
   user_discord_id BigInt?
+  user_github_id  String?
   daily_records   daily_records[]
 }
