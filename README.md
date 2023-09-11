@@ -1,6 +1,6 @@
-# Fastify Example
+# サークル活動時間取得用サーバー
 
-This example starts a [Fastify](https://www.fastify.io/) server.
+これはRailway上でホストされているサークル活動時間を取得するためのサーバーです.
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/ZZ50Bj)
 
